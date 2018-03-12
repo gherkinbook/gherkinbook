@@ -1,0 +1,4 @@
+{
+  "source": "./test/features",
+  "output": "./template/assets/data"
+}

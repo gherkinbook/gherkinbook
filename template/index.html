@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="description" content="">
+  <meta name="generator" content="GherkinBook">
+  <meta name="author" content="Huseyin Ozyilmaz">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <title>GherkinBook</title>
+  <style media="screen">
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="page">
+    <div class="search">
+      <input type="text" id="txtSearch" v-model="search" @keyup.esc="clear" placeholder="Type to search">
+    </div>
+    <nav class="site" v-cloak>
+      <ul class="list-groups">
+        <li v-for="group in featureList">
+          <!-- <a href="#">{{group.name | capitalize}}</a> -->
+          <span class="group-name">{{group.name | capitalize}}</span>
+          <ul class="list-items">
+            <li v-for="feature in group.features">
+              <a :href="feature.path | pathify" @click="onFeatureSelect(feature.id)" :class="{active : isActive(feature.id)}">{{feature.name}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <header class="site" v-cloak>
+
+    </header>
+    <main id="content" class="site" v-cloak>
+      <article class="feature" :id="selected.path" v-for="selected in features">
+        <div class="feature-title">Feature</div>
+        <div class="tags">
+          <i v-for="tag in selected.tags">{{tag}} </i>
+        </div>
+        <h1>{{selected.name}}</h1>
+        <p>{{selected.description}}</p>
+        <section class="scenario" v-for="scenario in selected.scenarios">
+          <div class="tags">
+            <i v-for="tag in scenario.tags">{{tag}}</i>
+          </div>
+          <h2><em>{{scenario.keyword}}: </em>{{scenario.name}}</h2>
+          <p>{{scenario.description}}</p>
+          <ul>
+            <li v-for="step in scenario.steps">
+              <em>{{step.keyword}}</em>{{step.text}}
+              <p v-if="step.content">{{step.content}}</p>
+              <table class="data-table" v-if="step.dataTable">
+                <tbody>
+                  <tr v-for="row in step.dataTable">
+                    <td v-for="cell in row">{{cell}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+          </ul>
+          <table class="examples" v-if="scenario.examples" v-for="example in scenario.examples">
+            <thead>
+              <tr>
+                <th class="table-title" :colspan="example.columns.length">
+                  <em>{{example.keyword}}: </em>{{example.name}}</th>
+              </tr>
+              <tr>
+                <th v-for="column in example.columns">{{column}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="row in example.rows">
+                <td v-for="cell in row">{{cell}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </article>
+    </main>
+  </div>
+  <script src="assets/data/gherkinbook.js" charset="utf-8"></script>
+  <script src="assets/js/vue.js" charset="utf-8"></script>
+  <script src="assets/js/main.js" charset="utf-8"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "gherkinbook",
+  "version": "1.0.0",
+  "description": "GherkinBook Generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run lint",
+    "start": "node index.js",
+    "lint": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gherkinbook/gherkinbook.git"
+  },
+  "author": "Huseyin Ozyilmaz",
+  "license": "MIT",
+  "keywords": [
+    "gherkinbook",
+    "gherkin",
+    "cucumber",
+    "BDD",
+    "report",
+    "html",
+    "book"
+  ],
+  "engines": {
+    "node": ">= 4"
+  },
+  "bugs": {
+    "url": "https://github.com/gherkinbook/gherkinbook/issues"
+  },
+  "homepage": "https://github.com/gherkinbook/gherkinbook#readme",
+  "devDependencies": {
+    "standard": "^11.0.0"
+  },
+  "dependencies": {
+    "gherkin": "^5.0.0"
+  }
+}
