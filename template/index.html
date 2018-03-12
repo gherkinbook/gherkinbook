@@ -36,14 +36,14 @@
 
     </header>
     <main id="content" class="site" v-cloak>
-      <article class="feature" :id="selected.path" v-for="selected in features">
+      <article class="feature" :id="feature.path" v-for="feature in features">
         <div class="feature-title">Feature</div>
         <div class="tags">
-          <i v-for="tag in selected.tags">{{tag}} </i>
+          <i v-for="tag in feature.tags">{{tag}} </i>
         </div>
-        <h1>{{selected.name}}</h1>
-        <p>{{selected.description}}</p>
-        <section class="scenario" v-for="scenario in selected.scenarios">
+        <h1>{{feature.name}}</h1>
+        <p>{{feature.description}}</p>
+        <section class="scenario" v-for="scenario in feature.scenarios">
           <div class="tags">
             <i v-for="tag in scenario.tags">{{tag}}</i>
           </div>

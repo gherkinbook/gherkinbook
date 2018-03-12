@@ -6,6 +6,9 @@ class FeatureService {
   getFeatureList() {
     let featureMap = new Map()
     for (let feature of this.features) {
+      if (!feature.name) {
+        continue
+      }
       let tokens = feature.uri.split('/')
       let group = tokens[tokens.length-2]
       if(!featureMap.get(group)) {
@@ -28,7 +31,7 @@ class FeatureService {
   }
 
   getFeatures() {
-    return this.features.map(feature => this.parseFeature(feature))
+    return this.features.map(feature => this.parseFeature(feature)).filter(feature => feature.name)
   }
 
   findFeatureById(id) {
@@ -82,10 +85,7 @@ class FeatureService {
     }
   }
 
-  slugify(text) {
-    if (!text || text.length === 0) {
-      return ""
-    }
+  slugify(text = '') {
     return text.toString().toLowerCase()
       .replace(/\s+/g, '-')           // Replace spaces with -
       .replace(/&/g, '-and-')         // Replace & with 'and'
