@@ -1,6 +1,7 @@
 /** Variables **/
 :root {
   --active-link-color: #008cff;
+  --search-result-color: #0066ba;
   /* --theme-color:#2973b7;
   --syntax-color:#2973b7; */
   --theme-color:#333;
@@ -138,6 +139,27 @@ article.feature h1 {
 }
 article.feature p {
   font-size: 1rem;
+}
+article.search-result {
+  margin-bottom: 50px;
+}
+article.search-result h1 {
+  text-align: center;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+article.search-result h3 {
+  margin-bottom: 5px;
+}
+article.search-result a {
+  color: var(--search-result-color);
+  text-decoration: underline;
+  font-weight: 400;
+  font-size: 1.2rem;
+  text-transform: capitalize;
+}
+article.search-result li.search-result-item {
+  padding-bottom: 10px;
 }
 section.scenario {
   margin-bottom: 30px;

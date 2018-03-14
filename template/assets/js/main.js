@@ -1,6 +1,17 @@
 class FeatureService {
   constructor() {
-    this.features = gherkinbook
+    this.features = gherkinbook.map(feature =>
+      this.parseFeature(feature)
+    ).filter(feature => feature.name)
+
+    this.fuse = new Fuse(this.features, {
+      threshold: 0.3,
+      keys: [
+        'name', 'description', 'tags', 'scenarios.name',
+        'scenarios.description', 'scenarios.tags',
+        'scenarios.steps.text'
+      ]
+    })
   }
 
   getFeatureList() {
@@ -31,7 +42,7 @@ class FeatureService {
   }
 
   getFeatures() {
-    return this.features.map(feature => this.parseFeature(feature)).filter(feature => feature.name)
+    return this.features
   }
 
   findFeatureById(id) {
@@ -50,11 +61,16 @@ class FeatureService {
     }
   }
 
+  search(keyword) {
+    return this.fuse.search(keyword)
+  }
+
   parseFeature(feature) {
     return {
       id: feature.id,
       name: feature.name,
       path: this.slugify(feature.name),
+      uri: feature.uri,
       tags: feature.tags ? feature.tags.map(element => element.name) : [],
       description: feature.description,
       scenarios: feature.children ? feature.children.map((scenario) => {
@@ -122,16 +138,37 @@ new Vue({
   },
   methods: {
     clear: function (event){
-      event.target.value = ''
+      this.search = ''
     },
     onFeatureSelect : function(id) {
+      this.clear()
       this.selectedId = id
     },
     isActive: function(id) {
       return this.selectedId === id
     }
   },
+  computed: {
+    filteredFeatures () {
+      var query = this.search && this.search.toLowerCase()
+      var features = this.features
+      if (query) {
+        features = service.search(query)
+      }
+      return features
+    },
+    isShowingSearchResults() {
+      return this.search && this.search.toLowerCase()
+    }
+  },
   mounted() {
     this.selectedId = service.findFeatureIdByPath(window.location.hash.substr(1))
+  },
+  updated() {
+    if (this.search) {
+      document.getElementById('content').scrollTop = 0
+    } else {
+      document.getElementById(service.findFeatureById(this.selectedId).path).scrollIntoView()
+    }
   }
 })

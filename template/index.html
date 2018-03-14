@@ -25,7 +25,7 @@
           <!-- <a href="#">{{group.name | capitalize}}</a> -->
           <span class="group-name">{{group.name | capitalize}}</span>
           <ul class="list-items">
-            <li v-for="feature in group.features">
+            <li v-for="feature in group.features" :id="feature.id">
               <a :href="feature.path | pathify" @click="onFeatureSelect(feature.id)" :class="{active : isActive(feature.id)}">{{feature.name}}</a>
             </li>
           </ul>
@@ -36,7 +36,18 @@
 
     </header>
     <main id="content" class="site" v-cloak>
-      <article class="feature" :id="feature.path" v-for="feature in features">
+      <article class="feature search-result" v-if="isShowingSearchResults">
+        <h1>{{filteredFeatures.length}} results matching "{{search}}"</h1>
+        <ul>
+          <li class="search-result-item" v-for="feature in filteredFeatures">
+            <h3><a :href="feature.path | pathify" v-on:click="onFeatureSelect(feature.id)">{{feature.name}}</a></h3>
+            <ul>
+              <li v-for="scenario in feature.scenarios.slice(0, 5)">{{scenario.name}}</li>
+            </ul>
+          </li>
+        </ul>
+      </article>
+      <article class="feature" :id="feature.path" v-for="feature in filteredFeatures" v-else>
         <div class="feature-title">Feature</div>
         <div class="tags">
           <i v-for="tag in feature.tags">{{tag}} </i>
@@ -84,6 +95,7 @@
   </div>
   <script src="assets/data/gherkinbook.js" charset="utf-8"></script>
   <script src="assets/js/vue.js" charset="utf-8"></script>
+  <script src="assets/js/fuse.min.js" charset="utf-8"></script>
   <script src="assets/js/main.js" charset="utf-8"></script>
 </body>
 </html>
