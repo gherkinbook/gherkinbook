@@ -22,7 +22,6 @@
     <nav class="site" v-cloak>
       <ul class="list-groups">
         <li v-for="group in featureList">
-          <!-- <a href="#">{{group.name | capitalize}}</a> -->
           <span class="group-name">{{group.name | capitalize}}</span>
           <ul class="list-items">
             <li v-for="feature in group.features" :id="feature.id">

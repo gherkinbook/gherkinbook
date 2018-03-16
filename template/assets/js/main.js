@@ -20,7 +20,7 @@ class FeatureService {
       if (!feature.name) {
         continue
       }
-      let tokens = feature.uri.split('/')
+      let tokens = feature.uri.includes('/') ? feature.uri.split('/') : feature.uri.split('\\')
       let group = tokens[tokens.length-2]
       if(!featureMap.get(group)) {
         featureMap.set(group, [])
@@ -121,7 +121,9 @@ var service = new FeatureService()
 Vue.filter('capitalize', function (value) {
   if (!value) return ''
   value = value.toString()
-  return value.charAt(0).toUpperCase() + value.slice(1)
+  return value.split('-').map(function capitalize(part) {
+    return part.charAt(0).toUpperCase() + part.slice(1)
+  }).join(' ')
 })
 Vue.filter('pathify', function (value) {
   return value ? '#' + value : ''
