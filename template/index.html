@@ -39,7 +39,29 @@
       <a href="#" class="toolbar-button print"><i class="icon-printer"></i></a>
     </header>
     <main id="content" class="site" v-cloak>
-      <article class="feature search-result" v-if="isShowingSearchResults">
+      <div class="content show-hide-feature-details">
+        <h1>Show/Hide Feature Details</h1>
+        <div>
+          <label for="">Scenario Steps</label>
+          <select v-model="scenarioStepsVisibility"><option v-for="option in visibilityOptions" v-bind:value="option.value">{{option.text}}</option></select>
+        </div>
+        <div>
+          <label for="">Scenarios</label>
+          <select v-model="scenariosVisibility"><option v-for="option in visibilityOptions" v-bind:value="option.value">{{option.text}}</option></select>
+        </div>
+        <div>
+          <label for="">Tags</label>
+          <select v-model="tagsVisibility"><option v-for="option in visibilityOptions" v-bind:value="option.value">{{option.text}}</option></select>
+        </div>
+        <div>
+          <label for="">Descriptions</label>
+          <select v-model="descriptionsVisibility"><option v-for="option in visibilityOptions" v-bind:value="option.value">{{option.text}}</option></select>
+        </div>
+        <footer>
+          <button type="button" name="button">Close</button>
+        </footer>
+      </div>
+      <article class="content search-result" v-if="isShowingSearchResults">
         <h1>{{filteredFeatures.length}} results matching "{{search}}"</h1>
         <ul>
           <li class="search-result-item" v-for="feature in filteredFeatures">
@@ -50,20 +72,20 @@
           </li>
         </ul>
       </article>
-      <article class="feature" :id="feature.path" v-for="feature in filteredFeatures" v-else>
+      <article class="content feature" :id="feature.path" v-for="feature in filteredFeatures" v-else>
         <div class="feature-title">Feature</div>
-        <div class="tags">
+        <div class="tags" v-if="tagsVisibility === 'show'">
           <i v-for="tag in feature.tags">{{tag}} </i>
         </div>
         <h1><a class="anchor" :href="feature.path | pathify"><i class="icon-link"></i></a>{{feature.name}}</h1>
-        <p>{{feature.description}}</p>
-        <section class="scenario" v-for="scenario in feature.scenarios">
-          <div class="tags">
+        <p v-if="descriptionsVisibility === 'show'">{{feature.description}}</p>
+        <section v-if="scenariosVisibility === 'show'" class="scenario" v-for="scenario in feature.scenarios">
+          <div class="tags" v-if="tagsVisibility === 'show'">
             <i v-for="tag in scenario.tags">{{tag}}</i>
           </div>
           <h2><em>{{scenario.keyword}}: </em>{{scenario.name}}</h2>
-          <p>{{scenario.description}}</p>
-          <ul>
+          <p v-if="descriptionsVisibility === 'show'">{{scenario.description}}</p>
+          <ul v-if="scenarioStepsVisibility === 'show'">
             <li v-for="step in scenario.steps">
               <em>{{step.keyword}}</em>{{step.text}}
               <p v-if="step.content">{{step.content}}</p>
@@ -76,7 +98,7 @@
               </table>
             </li>
           </ul>
-          <table class="examples" v-if="scenario.examples" v-for="example in scenario.examples">
+          <table v-if="scenarioStepsVisibility === 'show'" class="examples" v-if="scenario.examples" v-for="example in scenario.examples">
             <thead>
               <tr>
                 <th class="table-title" :colspan="example.columns.length">

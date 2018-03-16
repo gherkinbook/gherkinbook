@@ -138,7 +138,12 @@ new Vue({
     search: '',
     selectedId: '',
     featurePositions: [],
-    showMenu: true
+    showMenu: true,
+    scenarioStepsVisibility: 'show',
+    scenariosVisibility: 'show',
+    tagsVisibility: 'show',
+    descriptionsVisibility: 'show',
+    visibilityOptions: [{text: 'Show', value: 'show'}, {text: 'Hide', value: 'hide'}]
   },
   methods: {
     clear: function (event){
