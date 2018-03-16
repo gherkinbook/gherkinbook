@@ -78,29 +78,17 @@ input[type="text"] {
 }
 .page-header {
   display: grid;
-  grid-template-columns: 160px auto 40px 40px 80px;
+  grid-template-columns: 40px 1fr;
   grid-template-rows: 1fr;
-  grid-template-areas: "menu title filter hide print";
+  grid-template-areas: "menu title";
   align-items: center;
 }
 .page-header h1 {
   display: inline-block;
   grid-area: title;
-  text-align: center;
+  text-align: left;
   font-size: 16px;
-  color: var(--red)
-}
-.page-header.menu {
-  grid-area: menu;
-}
-.page-header.print {
-  grid-area: print;
-}
-.page-header.hide {
-  grid-area: hide;
-}
-.page-header.filter {
-  grid-area: filter;
+  color: var(--red);
 }
 nav.site {
   grid-area: nav;
