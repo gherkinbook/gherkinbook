@@ -130,11 +130,13 @@ Vue.filter('pathify', function (value) {
 new Vue({
   el: '#app',
   data: {
+    title: 'GherkinBook',
     featureList: service.getFeatureList(),
     features: service.getFeatures(),
     search: '',
     selectedId: '',
-    featurePositions: []
+    featurePositions: [],
+    showMenu: true
   },
   methods: {
     clear: function (event){
@@ -146,6 +148,9 @@ new Vue({
     },
     isActive: function(id) {
       return this.selectedId === id
+    },
+    toggleMenu: function() {
+      this.showMenu = !this.showMenu
     }
   },
   computed: {
@@ -162,13 +167,18 @@ new Vue({
     }
   },
   mounted() {
-    this.selectedId = service.findFeatureIdByPath(window.location.hash.substr(1))
+    var idInUrl = window.location.hash.substr(1)
+    if (idInUrl) {
+      this.selectedId = service.findFeatureIdByPath(idInUrl)
+    }
   },
   updated() {
     if (this.search) {
       document.getElementById('content').scrollTop = 0
     } else {
-      document.getElementById(service.findFeatureById(this.selectedId).path).scrollIntoView()
+      if (this.selectedId) {
+        document.getElementById(service.findFeatureById(this.selectedId).path).scrollIntoView()
+      }
     }
   }
 })

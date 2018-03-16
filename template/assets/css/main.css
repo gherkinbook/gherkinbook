@@ -1,10 +1,12 @@
 /** Variables **/
 :root {
-  --active-link-color: #008cff;
+  --white: #F2F5F4;
+  --red: #F34C4B;
+  --light-grey: #A3A6AE;
+  --matt-red: #B05C4E;
+  --dark: #35353D;
+  --blue: #008cff;
   --search-result-color: #0066ba;
-  /* --theme-color:#2973b7;
-  --syntax-color:#2973b7; */
-  --theme-color:#333;
   --syntax-color:#333;
 }
 
@@ -31,6 +33,23 @@ a {
 a:hover {
   text-decoration: underline;
 }
+a.toolbar-button {
+  display: inline-block;
+  height: 50px;
+  padding: 0 10px;
+  max-width: 40px;
+  border-bottom: none;
+  color: var(--light-grey);
+  text-transform: uppercase;
+  line-height: 50px;
+  font-size: 16px;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+a.toolbar-button:hover {
+  color: var(--red);
+  text-decoration: none;
+}
 input {
   border: none;
   font-size: 14px;
@@ -53,6 +72,32 @@ input {
 }
 .search input {
   width: calc(100% - 12px);
+}
+.page-header {
+  display: grid;
+  grid-template-columns: 160px auto 40px 40px 80px;
+  grid-template-rows: 1fr;
+  grid-template-areas: "menu title filter hide print";
+  align-items: center;
+}
+.page-header h1 {
+  display: inline-block;
+  grid-area: title;
+  text-align: center;
+  font-size: 16px;
+  color: var(--red)
+}
+.page-header.menu {
+  grid-area: menu;
+}
+.page-header.print {
+  grid-area: print;
+}
+.page-header.hide {
+  grid-area: hide;
+}
+.page-header.filter {
+  grid-area: filter;
 }
 nav.site {
   grid-area: nav;
@@ -89,7 +134,7 @@ nav.site {
   white-space: nowrap;
 }
 .site ul.list-groups li a.active {
-  color: #008cff;
+  color: var(--red);
   text-decoration: none;
 }
 nav.site ul.list-items {
@@ -117,7 +162,7 @@ div.tags {
 article.feature {
   margin-left: auto;
   margin-right: auto;
-  border-top: 1px solid var(--theme-color);
+  border-top: 1px solid var(--light-grey);
   width: 90%;
   max-width: 900px;
   word-wrap: break-word;
@@ -125,7 +170,7 @@ article.feature {
 }
 article.feature div.feature-title {
   width: 80px;
-  background-color: var(--theme-color);
+  background-color: var(--red);
   color: #fff;
   float: right;
   padding: 5px 10px;
@@ -136,6 +181,16 @@ article.feature h1 {
   font-weight: 600;
   text-transform: capitalize;
   font-size: 2em;
+}
+article.feature h1:hover .anchor {
+  opacity: 1;
+}
+a.anchor {
+  opacity: 0;
+  margin-left: -1.5em;
+  padding-right: 0.5em;
+  font-size: 16px;
+  color: var(--matt-red)
 }
 article.feature p {
   font-size: 1rem;
@@ -176,7 +231,7 @@ section.scenario li {
 section.scenario em {
   font-style: normal;
   font-weight: 500;
-  color: var(--syntax-color);
+  color: var(--dark);
 }
 table.examples {
   margin-left: 30px;
@@ -215,4 +270,82 @@ table.data-table td:first-child {
 }
 table.data-table tr:last-child td {
   border-bottom: 0px;
+}
+
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?vuofd8');
+  src:  url('../fonts/icomoon.eot?vuofd8#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?vuofd8') format('truetype'),
+    url('../fonts/icomoon.woff?vuofd8') format('woff'),
+    url('../fonts/icomoon.svg?vuofd8#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-book:before {
+  content: "\e91f";
+}
+.icon-price-tag:before {
+  content: "\e935";
+}
+.icon-printer:before {
+  content: "\e954";
+}
+.icon-search:before {
+  content: "\e986";
+}
+.icon-cogs:before {
+  content: "\e995";
+}
+.icon-pie-chart:before {
+  content: "\e99a";
+}
+.icon-stats-dots:before {
+  content: "\e99b";
+}
+.icon-fire:before {
+  content: "\e9a9";
+}
+.icon-menu:before {
+  content: "\e9bd";
+}
+.icon-link:before {
+  content: "\e9cb";
+}
+.icon-eye:before {
+  content: "\e9ce";
+}
+.icon-eye-blocked:before {
+  content: "\e9d1";
+}
+.icon-bookmark:before {
+  content: "\e9d2";
+}
+.icon-checkbox-checked:before {
+  content: "\ea52";
+}
+.icon-checkbox-unchecked:before {
+  content: "\ea53";
+}
+.icon-filter:before {
+  content: "\ea5b";
+}
+.icon-file-pdf:before {
+  content: "\eadf";
 }

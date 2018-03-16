@@ -32,8 +32,12 @@
         </li>
       </ul>
     </nav>
-    <header class="site" v-cloak>
-
+    <header class="page-header" v-cloak>
+      <a href="#" class="toolbar-button menu" @click="toggleMenu"><i class="icon-menu"></i></a>
+      <a href="#" class="toolbar-button filter"><i class="icon-filter"></i></a>
+      <h1>{{title}}</h1>
+      <a href="#" class="toolbar-button hide"><i class="icon-eye"></i></a>
+      <a href="#" class="toolbar-button print"><i class="icon-printer"></i></a>
     </header>
     <main id="content" class="site" v-cloak>
       <article class="feature search-result" v-if="isShowingSearchResults">
@@ -52,7 +56,7 @@
         <div class="tags">
           <i v-for="tag in feature.tags">{{tag}} </i>
         </div>
-        <h1>{{feature.name}}</h1>
+        <h1><a class="anchor" :href="feature.path | pathify"><i class="icon-link"></i></a>{{feature.name}}</h1>
         <p>{{feature.description}}</p>
         <section class="scenario" v-for="scenario in feature.scenarios">
           <div class="tags">
