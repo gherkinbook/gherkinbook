@@ -139,6 +139,9 @@ new Vue({
     selectedId: '',
     featurePositions: [],
     showMenu: true,
+    showShowHideSettings: false,
+    showFilterSettings: false,
+    showPrintSettings: false,
     scenarioStepsVisibility: 'show',
     scenariosVisibility: 'show',
     tagsVisibility: 'show',
@@ -158,6 +161,15 @@ new Vue({
     },
     toggleMenu: function() {
       this.showMenu = !this.showMenu
+    },
+    toggleShowHideSettings: function() {
+      this.showShowHideSettings = !this.showShowHideSettings
+    },
+    toggleFilterSettings: function() {
+      this.showFilterSettings = !this.showFilterSettings
+    },
+    togglePrintSettings: function() {
+      this.showPrintSettings = !this.showPrintSettings
     }
   },
   computed: {

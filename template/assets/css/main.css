@@ -1,6 +1,6 @@
 /** Variables **/
 :root {
-  --white: #F2F5F4;
+  --white: #fafafa;
   --red: #F34C4B;
   --light-grey: #A3A6AE;
   --matt-red: #B05C4E;
@@ -57,11 +57,11 @@ input[type="text"] {
 }
 .page {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px 1fr 300px;
   grid-template-rows: 50px 1fr;
   height: 100vh;
-  grid-template-areas: "search  header"
-                       "nav     main  ";
+  grid-template-areas: "search header toolbar"
+                       "nav    main   main";
   align-items: center;
   justify-items:stretch;
 }
@@ -101,7 +101,7 @@ input[type="text"] {
 }
 nav.site {
   grid-area: nav;
-  background-color: #fafafa;
+  background-color: var(--white);
   border-right: 1px solid rgba(0,0,0,.07);
   border-top: 1px solid rgba(0,0,0,.07);
   height: calc(100vh - 51px);
@@ -146,27 +146,39 @@ nav.site li.divider {
   overflow: hidden;
   background: rgba(0,0,0,.07);
 }
+nav.toolbar {
+  grid-area: toolbar;
+  justify-self: end;
+  padding-right: 20px;
+}
 header.site {
   grid-area: header;
 }
 main.site {
   grid-area: main;
   align-self: start;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "content options";
+  align-items: center;
+  justify-items:stretch;
+}
+section.content {
+  grid-area: content;
   height: calc(100vh - 51px);
   overflow-y: auto;
 }
-div.tags {
-  font-size: 12px;
-  opacity: .8;
-}
-.content {
+section.content > article {
   margin-left: auto;
   margin-right: auto;
   width: 90%;
   max-width: 900px;
   color: #333;
 }
-
+div.tags {
+  font-size: 12px;
+  opacity: .8;
+}
 article.feature {
   border-top: 1px solid var(--light-grey);
   word-wrap: break-word;
@@ -281,23 +293,32 @@ select {
   margin: 5px;
   outline: none;
 }
-
-.show-hide-feature-details {
-  padding-bottom: 20px;
+aside.options-container {
+  grid-area: options;
+  align-self: start;
+  height: calc(100vh - 51px);
+  background-color: var(--white);
+  border-left: 1px solid rgba(0,0,0,.07);
+  border-top: 1px solid rgba(0,0,0,.07);
 }
-.show-hide-feature-details h1 {
+aside.options-container .options {
+  width: 300px;
+  padding: 20px;
+}
+aside.options-container .options h1 {
   font-size: 18px;
   font-weight: 500;
   border-bottom: 1px solid var(--red);
 }
-.show-hide-feature-details label {
+aside.options-container label {
   font-weight: 500;
   display: inline-block;
-  width: 100px;
+  width: 150px;
 }
-footer {
+aside.options-container footer {
   text-align: right;
 }
+
 button {
   padding: 6px 10px;
   background-color: var(--white);
