@@ -50,6 +50,9 @@ a.toolbar-button:hover {
   color: var(--red);
   text-decoration: none;
 }
+a.toolbar-button .active {
+  color: var(--red);
+}
 input[type="text"] {
   border: none;
   font-size: 14px;

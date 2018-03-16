@@ -36,9 +36,9 @@
       <h1>{{title}}</h1>
     </header>
     <nav class="toolbar">
-      <a href="#" class="toolbar-button filter" @click="toggleFilterSettings"><i class="icon-filter"></i></a>
-      <a href="#" class="toolbar-button hide" @click="toggleShowHideSettings"><i class="icon-eye"></i></a>
-      <a href="#" class="toolbar-button print" @click="togglePrintSettings"><i class="icon-printer"></i></a>
+      <a href="#" class="toolbar-button filter" @click="toggleFilterSettings"><i class="icon-filter" :class="{active: showFilterSettings}"></i></a>
+      <a href="#" class="toolbar-button hide" @click="toggleShowHideSettings"><i class="icon-eye" :class="{active: showShowHideSettings}"></i></a>
+      <a href="#" class="toolbar-button print" @click="togglePrintSettings"><i class="icon-printer" :class="{active: showPrintSettings}"></i></a>
     </nav>
     <main class="site">
       <aside class="options-container" v-cloak>
