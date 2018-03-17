@@ -45,6 +45,15 @@ class FeatureService {
     return this.features
   }
 
+  getTags() {
+    let tags = new Set()
+    this.features.map(feature => {
+      feature.tags.map(tag => tags.add(tag))
+      feature.scenarios.map(scenario => scenario.tags.map(tag => tags.add(tag)))
+    })
+    return Array.from(tags)
+  }
+
   findFeatureById(id) {
     for (let feature of this.features) {
       if (feature.id === id) {
@@ -129,18 +138,54 @@ Vue.filter('pathify', function (value) {
   return value ? '#' + value : ''
 })
 
+Vue.component('multi-select', {
+  props: ['list'],
+  data() {
+    return {
+      search: '',
+      selectedItems: this.list.selectedItems
+    }
+  },
+  computed: {
+    filteredItems() {
+      var query = this.search && this.search.toLowerCase()
+      return query ? this.list.items.filter(item => item.toLowerCase().indexOf(query) > -1) : this.list.items
+    }
+  },
+  methods: {
+    clear() {
+      this.search = ''
+    },
+    select() {
+      this.filteredItems.map(tag => {
+        if(!this.selectedItems.includes(tag)) {
+          this.selectedItems.push(tag)
+        }
+      })
+    },
+    unselect() {
+      this.selectedItems = this.selectedItems.filter(tag => !this.filteredItems.includes(tag))
+    }
+  },
+  watch: {
+    selectedItems: function() {
+      this.$emit('change', { items: this.list.items, selectedItems: this.selectedItems })
+    }
+  }
+})
+
 new Vue({
   el: '#app',
   data: {
     title: 'GherkinBook',
     featureList: service.getFeatureList(),
     features: service.getFeatures(),
+    tags: { items: service.getTags(), selectedItems: service.getTags()},
     search: '',
     selectedId: '',
-    featurePositions: [],
     showMenu: true,
     showShowHideSettings: false,
-    showFilterSettings: false,
+    showFilterSettings: true,
     showPrintSettings: false,
     showScenarioSteps: true,
     showScenarios: true,
@@ -169,6 +214,9 @@ new Vue({
     },
     togglePrintSettings: function() {
       this.showPrintSettings = !this.showPrintSettings
+    },
+    onTagsFilterChange: function(tags) {
+      this.tags = tags
     }
   },
   computed: {

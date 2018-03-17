@@ -36,8 +36,8 @@
       <h1>{{title}}</h1>
     </header>
     <nav class="toolbar">
-      <a href="#" class="toolbar-button filter" @click="toggleFilterSettings"><i class="icon-filter" :class="{active: showFilterSettings}"></i></a>
       <a href="#" class="toolbar-button hide" @click="toggleShowHideSettings"><i class="icon-eye" :class="{active: showShowHideSettings}"></i></a>
+      <a href="#" class="toolbar-button filter" @click="toggleFilterSettings"><i class="icon-filter" :class="{active: showFilterSettings}"></i></a>
       <a href="#" class="toolbar-button print" @click="togglePrintSettings"><i class="icon-printer" :class="{active: showPrintSettings}"></i></a>
     </nav>
     <main class="site">
@@ -63,6 +63,23 @@
         </div>
         <div class="options filter" v-if="showFilterSettings">
           <h1>Filter Features & Scenarios</h1>
+          <multi-select inline-template :list="tags" v-on:change="onTagsFilterChange">
+            <div class="multi-select">
+              <input type="text" placeholder="Filter list..." v-model="search" @keyup.esc="clear">
+              <div class="multi-select-items" v-if="filteredItems.length > 0">
+                <label class="control control-checkbox" v-for="tag in filteredItems">{{tag}}
+                  <input type="checkbox" :value="tag" v-model="selectedItems"/>
+                  <div class="control-indicator"></div>
+                </label>
+              </div>
+              <p v-else>No tags found</p>
+              <footer>
+                <span>Multiple</span>
+                <button type="button" @click="select">Select</button>
+                <button type="button" @click="unselect">Unselect</button>
+              </footer>
+            </div>
+          </multi-select>
         </div>
         <div class="options print" v-if="showPrintSettings">
           <h1>Print Settings</h1>
