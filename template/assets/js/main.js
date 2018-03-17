@@ -142,11 +142,10 @@ new Vue({
     showShowHideSettings: false,
     showFilterSettings: false,
     showPrintSettings: false,
-    scenarioStepsVisibility: 'show',
-    scenariosVisibility: 'show',
-    tagsVisibility: 'show',
-    descriptionsVisibility: 'show',
-    visibilityOptions: [{text: 'Show', value: 'show'}, {text: 'Hide', value: 'hide'}]
+    showScenarioSteps: true,
+    showScenarios: true,
+    showTags: true,
+    showDescriptions: true
   },
   methods: {
     clear: function (event){
