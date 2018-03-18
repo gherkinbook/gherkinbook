@@ -3,7 +3,7 @@ const path = require('path')
 const crypto = require('crypto')
 const Gherkin = require('gherkin')
 const configFileName = '.gherkinbook'
-const outputFileName = 'gherkinbook.js'
+const outputFileName = 'gherkinbook.min.js'
 
 if (!fs.existsSync(configFileName)) {
   console.error('GherkinBook Generator config file ' + configfile +' is missing.')
