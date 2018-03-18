@@ -30,6 +30,9 @@
     "url": "https://github.com/gherkinbook/gherkinbook/issues"
   },
   "homepage": "https://github.com/gherkinbook/gherkinbook#readme",
+  "standard": {
+    "globals": [ "Vue", "Fuse", "gherkinbook"]
+  },
   "devDependencies": {
     "standard": "^11.0.0"
   },

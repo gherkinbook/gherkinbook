@@ -1,5 +1,5 @@
 class FeatureService {
-  constructor() {
+  constructor () {
     this.features = gherkinbook.map(feature =>
       this.parseFeature(feature)
     ).filter(feature => feature.name)
@@ -14,15 +14,15 @@ class FeatureService {
     })
   }
 
-  getFeatureList() {
+  getFeatureList () {
     let featureMap = new Map()
     for (let feature of this.features) {
       if (!feature.name) {
         continue
       }
       let tokens = feature.uri.includes('/') ? feature.uri.split('/') : feature.uri.split('\\')
-      let group = tokens[tokens.length-2]
-      if(!featureMap.get(group)) {
+      let group = tokens[tokens.length - 2]
+      if (!featureMap.get(group)) {
         featureMap.set(group, [])
       }
       featureMap.get(group).push({
@@ -31,7 +31,7 @@ class FeatureService {
         path: this.slugify(feature.name)
       })
     }
-    var featureList = [];
+    var featureList = []
     for (let [k, v] of featureMap) {
       featureList.push({
         name: k,
@@ -41,11 +41,11 @@ class FeatureService {
     return featureList
   }
 
-  getFeatures() {
+  getFeatures () {
     return this.features
   }
 
-  getTags() {
+  getTags () {
     let tags = new Set()
     this.features.map(feature => {
       feature.tags.map(tag => tags.add(tag))
@@ -54,7 +54,7 @@ class FeatureService {
     return Array.from(tags)
   }
 
-  findFeatureById(id) {
+  findFeatureById (id) {
     for (let feature of this.features) {
       if (feature.id === id) {
         return this.parseFeature(feature)
@@ -62,7 +62,7 @@ class FeatureService {
     }
   }
 
-  findFeatureIdByPath(path) {
+  findFeatureIdByPath (path) {
     for (let feature of this.features) {
       if (this.slugify(feature.name) === path) {
         return feature.id
@@ -70,7 +70,7 @@ class FeatureService {
     }
   }
 
-  search(keyword) {
+  search (keyword) {
     return this.fuse.search(keyword)
   }
 
@@ -78,7 +78,7 @@ class FeatureService {
   * Removes Features and Scenarios specified by the tag list
   * and returns filtered list
   **/
-  filterFeaturesByTags(tagsExcluded) {
+  filterFeaturesByTags (tagsExcluded) {
     var filtered = []
     for (let feature of this.features) {
       if (!feature.tags.some(tag => tagsExcluded.includes(tag))) {
@@ -91,7 +91,7 @@ class FeatureService {
     return filtered
   }
 
-  parseFeature(feature) {
+  parseFeature (feature) {
     return {
       id: feature.id,
       name: feature.name,
@@ -127,19 +127,15 @@ class FeatureService {
     }
   }
 
-  slugify(text = '') {
+  slugify (text = '') {
     return text.toString().toLowerCase()
-      .replace(/\s+/g, '-')           // Replace spaces with -
-      .replace(/&/g, '-and-')         // Replace & with 'and'
-      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-      .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-      .replace(/^-+/, '')             // Trim - from start of text
-      .replace(/-+$/, '');            // Trim - from end of text
-    }
-}
-
-function log(stuff) {
-  console.log(JSON.parse(JSON.stringify(stuff)))
+      .replace(/\s+/g, '-')// Replace spaces with -
+      .replace(/&/g, '-and-')// Replace & with 'and'
+      .replace(/[^\w\-]+/g, '')// Remove all non-word chars
+      .replace(/\-\-+/g, '-')// Replace multiple - with single -
+      .replace(/^-+/, '')// Trim - from start of text
+      .replace(/-+$/, '')// Trim - from end of text
+  }
 }
 
 var service = new FeatureService()
@@ -147,7 +143,7 @@ var service = new FeatureService()
 Vue.filter('capitalize', function (value) {
   if (!value) return ''
   value = value.toString()
-  return value.split('-').map(function capitalize(part) {
+  return value.split('-').map(function capitalize (part) {
     return part.charAt(0).toUpperCase() + part.slice(1)
   }).join(' ')
 })
@@ -157,47 +153,47 @@ Vue.filter('pathify', function (value) {
 
 Vue.component('multi-select', {
   props: ['list'],
-  data() {
+  data () {
     return {
       search: '',
       selectedItems: this.list.selectedItems
     }
   },
   computed: {
-    filteredItems() {
+    filteredItems () {
       var query = this.search && this.search.toLowerCase()
       return query ? this.list.items.filter(item => item.toLowerCase().indexOf(query) > -1) : this.list.items
     }
   },
   methods: {
-    clear() {
+    clear () {
       this.search = ''
     },
-    select() {
+    select () {
       this.filteredItems.map(tag => {
-        if(!this.selectedItems.includes(tag)) {
+        if (!this.selectedItems.includes(tag)) {
           this.selectedItems.push(tag)
         }
       })
     },
-    unselect() {
+    unselect () {
       this.selectedItems = this.selectedItems.filter(tag => !this.filteredItems.includes(tag))
     }
   },
   watch: {
-    selectedItems: function() {
+    selectedItems: function () {
       this.$emit('change', { items: this.list.items, selectedItems: this.selectedItems })
     }
   }
 })
 
-new Vue({
+new Vue({// eslint-disable-line
   el: '#app',
   data: {
     title: 'GherkinBook',
     featureList: service.getFeatureList(),
     features: service.getFeatures(),
-    tags: { items: service.getTags(), selectedItems: service.getTags()},
+    tags: {items: service.getTags(), selectedItems: service.getTags()},
     search: '',
     selectedId: '',
     showMenu: true,
@@ -210,35 +206,35 @@ new Vue({
     showDescriptions: true
   },
   methods: {
-    clear: function (event){
+    clear: function (event) {
       this.search = ''
     },
-    onFeatureSelect : function(id) {
+    onFeatureSelect: function (id) {
       this.clear()
       this.selectedId = id
     },
-    isActive: function(id) {
+    isActive: function (id) {
       return this.selectedId === id
     },
-    toggleMenu: function() {
+    toggleMenu: function () {
       this.showMenu = !this.showMenu
     },
-    toggleShowHideSettings: function() {
+    toggleShowHideSettings: function () {
       this.showShowHideSettings = !this.showShowHideSettings
     },
-    toggleFilterSettings: function() {
+    toggleFilterSettings: function () {
       this.showFilterSettings = !this.showFilterSettings
     },
-    togglePrintSettings: function() {
+    togglePrintSettings: function () {
       this.showPrintSettings = !this.showPrintSettings
     },
-    onTagsFilterChange: function(tags) {
+    onTagsFilterChange: function (tags) {
       this.tags = tags
       this.selectedId = ''
     }
   },
   computed: {
-    matchingFeatures() {
+    matchingFeatures () {
       var query = this.search && this.search.toLowerCase()
       var features = this.features
       if (query) {
@@ -246,20 +242,20 @@ new Vue({
       }
       return features
     },
-    filteredFeatures() {
+    filteredFeatures () {
       return service.filterFeaturesByTags(this.tags.items.filter(tag => !this.tags.selectedItems.includes(tag)))
     },
-    isShowingSearchResults() {
+    isShowingSearchResults () {
       return this.search && this.search.toLowerCase()
     }
   },
-  mounted() {
+  mounted () {
     var idInUrl = window.location.hash.substr(1)
     if (idInUrl) {
       this.selectedId = service.findFeatureIdByPath(idInUrl)
     }
   },
-  updated() {
+  updated () {
     if (this.search) {
       document.getElementById('content').scrollTop = 0
     } else {

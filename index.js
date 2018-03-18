@@ -6,12 +6,12 @@ const configFileName = '.gherkinbook'
 const outputFileName = 'gherkinbook.min.js'
 
 if (!fs.existsSync(configFileName)) {
-  console.error('GherkinBook Generator config file ' + configfile +' is missing.')
+  console.error('GherkinBook Generator config file ' + configFileName + ' is missing.')
 }
 
 const config = JSON.parse(fs.readFileSync(configFileName, 'utf8'))
 
-function findFeatureFiles(base, files, result) {
+function findFeatureFiles (base, files, result) {
   files = files || fs.readdirSync(base)
   result = result || []
   files.forEach(function (file) {
