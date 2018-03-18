@@ -86,10 +86,11 @@
         </div>
       </aside>
       <section id="content" class="content" v-cloak>
+        <!-- Search Results -->
         <article class="content search-result" v-if="isShowingSearchResults">
-          <h1>{{filteredFeatures.length}} results matching "{{search}}"</h1>
+          <h1>{{matchingFeatures.length}} results matching "{{search}}"</h1>
           <ul>
-            <li class="search-result-item" v-for="feature in filteredFeatures">
+            <li class="search-result-item" v-for="feature in matchingFeatures">
               <h3><a :href="feature.path | pathify" v-on:click="onFeatureSelect(feature.id)">{{feature.name}}</a></h3>
               <ul>
                 <li v-for="scenario in feature.scenarios.slice(0, 5)">{{scenario.name}}</li>
@@ -97,6 +98,7 @@
             </li>
           </ul>
         </article>
+        <!-- END Search Results -->
         <article class="content feature" :id="feature.path" v-for="feature in filteredFeatures" v-else>
           <div class="feature-title">Feature</div>
           <div class="tags" v-if="showTags">

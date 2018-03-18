@@ -74,6 +74,23 @@ class FeatureService {
     return this.fuse.search(keyword)
   }
 
+  /**
+  * Removes Features and Scenarios specified by the tag list
+  * and returns filtered list
+  **/
+  filterFeaturesByTags(tagsExcluded) {
+    var filtered = []
+    for (let feature of this.features) {
+      if (!feature.tags.some(tag => tagsExcluded.includes(tag))) {
+        feature.scenarios = feature.scenarios.filter(scenario => !scenario.tags.some(tag => tagsExcluded.includes(tag)))
+        if (feature.scenarios.length) {
+          filtered.push(feature)
+        }
+      }
+    }
+    return filtered
+  }
+
   parseFeature(feature) {
     return {
       id: feature.id,
@@ -217,16 +234,20 @@ new Vue({
     },
     onTagsFilterChange: function(tags) {
       this.tags = tags
+      this.selectedId = ''
     }
   },
   computed: {
-    filteredFeatures () {
+    matchingFeatures() {
       var query = this.search && this.search.toLowerCase()
       var features = this.features
       if (query) {
         features = service.search(query)
       }
       return features
+    },
+    filteredFeatures() {
+      return service.filterFeaturesByTags(this.tags.items.filter(tag => !this.tags.selectedItems.includes(tag)))
     },
     isShowingSearchResults() {
       return this.search && this.search.toLowerCase()
@@ -243,7 +264,10 @@ new Vue({
       document.getElementById('content').scrollTop = 0
     } else {
       if (this.selectedId) {
-        document.getElementById(service.findFeatureById(this.selectedId).path).scrollIntoView()
+        var selectedElement = document.getElementById(service.findFeatureById(this.selectedId).path)
+        if (selectedElement) {
+          selectedElement.scrollIntoView()
+        }
       }
     }
   }
