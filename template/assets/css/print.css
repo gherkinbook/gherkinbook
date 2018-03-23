@@ -1,0 +1,84 @@
+*,
+*:before,
+*:after,
+*:first-letter,
+p:first-line,
+div:first-line,
+blockquote:first-line,
+li:first-line {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+html, body {
+  height:100%;
+  overflow: visible;
+}
+div.search, nav.site, header.page-header, nav.toolbar, aside.options-container {
+  display: none;
+}
+.page {
+  grid-template-columns: 0px 1fr 0px;
+  grid-template-rows: 5px 1fr;
+  height: 100%;
+}
+section.content {
+  height: 100%;
+  overflow-y: hidden;
+}
+section.content .cover-page {
+  display: block;
+  page-break-after: always;
+  padding-bottom: 50px;
+}
+section.content .cover-page .organisation {
+  font-size: 11pt;
+  font-weight: 800;
+}
+section.content .cover-page .title {
+  text-align: right;
+  font-size: 60pt;
+  width: 85%;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 0px;
+  padding-top: 400px;
+}
+section.content .cover-page .subtitle {
+  font-size: 20pt;
+  font-weight: 400;
+  text-align: right;
+  width: 85%;
+  margin-bottom: 250px;
+}
+section.content .cover-page .date {
+  text-align: center;
+  font-size: 14pt;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin: 0;
+}
+section.content .cover-page .revision {
+  text-align: center;
+  font-size: 10pt;
+  margin: 10px;
+  opacity: 0.75;
+}
+article.feature h1 {
+  font-size: 16pt;
+}
+article.feature p {
+  font-size: 11pt;
+}
+section.scenario {
+  /* page-break-inside: avoid; */
+}
+section.scenario h2 {
+  font-size: 13pt;
+}
+section.scenario li {
+  font-size: 11pt;
+}
+table.examples, table.data-table {
+  font-size: 10pt;
+}

@@ -198,12 +198,17 @@ new Vue({// eslint-disable-line
     selectedId: '',
     showMenu: true,
     showShowHideSettings: false,
-    showFilterSettings: true,
+    showFilterSettings: false,
     showPrintSettings: false,
     showScenarioSteps: true,
     showScenarios: true,
     showTags: true,
-    showDescriptions: true
+    showDescriptions: true,
+    documentTitle: 'Title',
+    documentSubtitle: 'Document Subtitle',
+    documentDate: '1 April 2018',
+    documentRevision: 'v.1',
+    documentOrganisation: 'GherkinBook'
   },
   methods: {
     clear: function (event) {

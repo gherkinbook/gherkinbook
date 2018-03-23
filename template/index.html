@@ -7,6 +7,7 @@
   <meta name="generator" content="GherkinBook">
   <meta name="author" content="Huseyin Ozyilmaz">
   <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/print.css" media="print">
   <title>GherkinBook</title>
   <style media="screen">
     [v-cloak] {
@@ -42,6 +43,7 @@
     </nav>
     <main class="site">
       <aside class="options-container" v-cloak>
+        <!-- Show Hide Settings -->
         <div class="options show-hide" v-if="showShowHideSettings">
           <h1>Show Feature Details</h1>
           <label class="control control-checkbox">Scenario Steps
@@ -61,6 +63,8 @@
             <div class="control-indicator"></div>
           </label>
         </div>
+        <!-- END Show Hide Settings -->
+        <!-- Show Filter Settings -->
         <div class="options filter" v-if="showFilterSettings">
           <h1>Filter Features & Scenarios</h1>
           <multi-select inline-template :list="tags" v-on:change="onTagsFilterChange">
@@ -81,11 +85,37 @@
             </div>
           </multi-select>
         </div>
+        <!-- END Show Filter Settings -->
+        <!-- Show Print Settings -->
         <div class="options print" v-if="showPrintSettings">
           <h1>Print Settings</h1>
+          <label for="document-title" class="settings-control">
+            Document Title <input id="document-title" type="text" v-model="documentTitle">
+          </label>
+          <label for="document-subtitle" class="settings-control">
+            Document Subtitle <input id="document-subtitle" type="text" v-model="documentSubtitle">
+          </label>
+          <label for="document-date" class="settings-control">
+            Date <input id="document-date" type="text" v-model="documentDate">
+          </label>
+          <label for="document-revision" class="settings-control">
+            Revision <input id="document-revision" type="text" v-model="documentRevision">
+          </label>
+          <label for="document-organisation" class="settings-control">
+            Organisation <input id="document-organisation" type="text" v-model="documentOrganisation">
+          </label>
         </div>
+        <!-- END Show Print Settings -->
       </aside>
       <section id="content" class="content" v-cloak>
+        <!-- Cover Page -->
+        <header class="cover-page">
+          <p class="organisation">{{documentOrganisation}}</p>
+          <h1 class="title">{{documentTitle}}</h1>
+          <h2 class="subtitle">{{documentSubtitle}}</h2>
+          <p class="date">{{documentDate}}</p>
+          <p class="revision">{{documentRevision}}</p>
+        </header>
         <!-- Search Results -->
         <article class="content search-result" v-if="isShowingSearchResults">
           <h1>{{matchingFeatures.length}} results matching "{{search}}"</h1>
