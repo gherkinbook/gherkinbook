@@ -1,5 +1,5 @@
 class FeatureService {
-  constructor () {
+  constructor (gherkinbook = []) {
     this.features = gherkinbook.map(feature =>
       this.parseFeature(feature)
     ).filter(feature => feature.name)
@@ -12,6 +12,14 @@ class FeatureService {
         'scenarios.steps.text'
       ]
     })
+  }
+
+  getFeatures () {
+    return this.features
+  }
+
+  setFeatures (features) {
+    this.features = features
   }
 
   getFeatureList () {
@@ -39,10 +47,6 @@ class FeatureService {
       })
     }
     return featureList
-  }
-
-  getFeatures () {
-    return this.features
   }
 
   getTags () {
@@ -138,7 +142,7 @@ class FeatureService {
   }
 }
 
-var service = new FeatureService()
+var service = new FeatureService(gherkinbook)
 
 Vue.filter('capitalize', function (value) {
   if (!value) return ''
