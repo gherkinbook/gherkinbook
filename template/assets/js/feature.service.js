@@ -1,4 +1,4 @@
-class FeatureService {
+class FeatureService {// eslint-disable-line
   constructor (gherkinbook = []) {
     this.features = gherkinbook.map(feature =>
       this.parseFeature(feature)

@@ -6,6 +6,9 @@
   <meta name="description" content="">
   <meta name="generator" content="GherkinBook">
   <meta name="author" content="Huseyin Ozyilmaz">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/print.css" media="print">
   <title>GherkinBook</title>
@@ -33,7 +36,9 @@
       </ul>
     </nav>
     <header class="page-header" v-cloak>
-      <a href="#" class="toolbar-button menu" @click="toggleMenu"><i class="icon-menu"></i></a>
+      <a href="index.html" class="toolbar-button logo" @click="toggleMenu">
+        <img src="assets/images/favicon-32x32.png" alt="GherkinBook Logo">
+      </a>
       <h1>{{title}}</h1>
     </header>
     <nav class="toolbar">

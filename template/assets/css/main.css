@@ -53,6 +53,13 @@ a.toolbar-button:hover {
 a.toolbar-button .active {
   color: var(--red);
 }
+a.toolbar-button.logo {
+  width: 50px;
+  max-width: 50px;
+}
+a.toolbar-button.logo img {
+  margin-top: 10px;
+}
 input[type="text"] {
   border: none;
   font-size: 14px;
