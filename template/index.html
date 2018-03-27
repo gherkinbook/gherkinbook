@@ -134,6 +134,9 @@
           </ul>
         </article>
         <!-- END Search Results -->
+        <article class="content not-found" v-else-if="filteredFeatures.length === 0">
+          <h1>No feature found</h1>
+        </article>
         <article class="content feature" :id="feature.path" v-for="feature in filteredFeatures" v-else>
           <div class="feature-title">Feature</div>
           <div class="tags" v-if="showTags">

@@ -232,6 +232,12 @@ article.search-result a {
 article.search-result li.search-result-item {
   padding-bottom: 10px;
 }
+article.not-found h1 {
+  text-align: center;
+  font-weight: 300;
+  text-transform: uppercase;
+  padding-top: 20%;
+}
 section.scenario {
   margin-bottom: 30px;
 }

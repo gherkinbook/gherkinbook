@@ -1,4 +1,4 @@
-var service = new FeatureService(gherkinbook)
+var service = 'undefined' !== typeof gherkinbook ? new FeatureService(gherkinbook) : service = new FeatureService([])
 
 Vue.filter('capitalize', function (value) {
   if (!value) return ''
