@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const glob = require("glob")
 const crypto = require('crypto')
 const Gherkin = require('gherkin')
 const configFileName = '.gherkinbook'
@@ -26,6 +27,10 @@ function findFeatureFiles (base, files, result) {
   })
   return result
 }
+
+glob(config.cucumberJson, function (er, files) {
+  console.log(files)
+})
 
 var files = findFeatureFiles(config.source)
 var parser = new Gherkin.Parser(new Gherkin.AstBuilder())
