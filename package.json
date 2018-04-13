@@ -38,6 +38,9 @@
       "gherkinbook",
       "FeatureService",
       "chai"
+    ],
+    "ignore": [
+      "**/*.min.js"
     ]
   },
   "devDependencies": {
