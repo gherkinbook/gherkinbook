@@ -1,5 +1,5 @@
 {
-  "source": "../gherkinbook-test-project/features",
+  "source": "../gherkinbook-test-project/features/**/*.feature",
   "cucumberJson": "../gherkinbook-test-project/*report.json",
   "output": "./template/assets/data"
 }
