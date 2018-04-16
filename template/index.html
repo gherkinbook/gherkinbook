@@ -43,75 +43,80 @@
       <h1>{{title}}</h1>
     </header>
     <nav class="toolbar">
-      <a href="#" class="toolbar-button hide" @click="toggleShowHideSettings"><i class="icon-eye" :class="{active: showShowHideSettings}"></i></a>
-      <a href="#" class="toolbar-button filter" @click="toggleFilterSettings"><i class="icon-filter" :class="{active: showFilterSettings}"></i></a>
-      <a href="#" class="toolbar-button print" @click="togglePrintSettings"><i class="icon-printer" :class="{active: showPrintSettings}"></i></a>
+      <a href="#" class="toolbar-button hide" @click="toggleSettings"><i class="icon-cogs" :class="{active: showSettings}"></i></a>
     </nav>
     <main class="site">
       <aside class="options-container" v-cloak>
         <!-- Show Hide Settings -->
-        <div class="options show-hide" v-if="showShowHideSettings">
-          <h1>Show Feature Details</h1>
-          <label class="control control-checkbox">Scenario Steps
-            <input type="checkbox" v-model="showScenarioSteps"/>
-            <div class="control-indicator"></div>
-          </label>
-          <label class="control control-checkbox">Tags
-            <input type="checkbox" v-model="showTags"/>
-            <div class="control-indicator"></div>
-          </label>
-          <label class="control control-checkbox">Descriptions
-            <input type="checkbox" v-model="showDescriptions"/>
-            <div class="control-indicator"></div>
-          </label>
-          <label class="control control-checkbox">Scenarios
-            <input type="checkbox" v-model="showScenarios"/>
-            <div class="control-indicator"></div>
-          </label>
-        </div>
-        <!-- END Show Hide Settings -->
-        <!-- Show Filter Settings -->
-        <div class="options filter" v-if="showFilterSettings">
-          <h1>Filter Features & Scenarios</h1>
-          <multi-select inline-template :list="tags" v-on:change="onTagsFilterChange">
-            <div class="multi-select">
-              <input type="text" placeholder="Filter list..." v-model="search" @keyup.esc="clear">
-              <div class="multi-select-items" v-if="filteredItems.length > 0">
-                <label class="control control-checkbox" v-for="tag in filteredItems">{{tag}}
-                  <input type="checkbox" :value="tag" v-model="selectedItems"/>
-                  <div class="control-indicator"></div>
-                </label>
+        <div class="options" v-if="showSettings">
+          <nav class="options-tabs">
+            <a href="#" class="hide" :class="{active: isActiveSettingsTab(1)}" @click="setActiveSettingsTab(1)"><i class="icon-eye"></i><span class="title">Show/Hide</span></a>
+            <a href="#" class="filter" :class="{active: isActiveSettingsTab(2)}" @click="setActiveSettingsTab(2)"><i class="icon-filter"></i><span class="title">Filter</span></a>
+            <a href="#" class="print" :class="{active: isActiveSettingsTab(3)}" @click="setActiveSettingsTab(3)"><i class="icon-printer"></i><span class="title">Print</span></a>
+          </nav>
+          <div class="show-hide" v-if="isActiveSettingsTab(1)">
+            <h1>Show Feature Details</h1>
+            <label class="control control-checkbox">Scenario Steps
+              <input type="checkbox" v-model="showScenarioSteps"/>
+              <div class="control-indicator"></div>
+            </label>
+            <label class="control control-checkbox">Tags
+              <input type="checkbox" v-model="showTags"/>
+              <div class="control-indicator"></div>
+            </label>
+            <label class="control control-checkbox">Descriptions
+              <input type="checkbox" v-model="showDescriptions"/>
+              <div class="control-indicator"></div>
+            </label>
+            <label class="control control-checkbox">Scenarios
+              <input type="checkbox" v-model="showScenarios"/>
+              <div class="control-indicator"></div>
+            </label>
+          </div>
+          <!-- END Show Hide Settings -->
+          <!-- Show Filter Settings -->
+          <div class="filter" v-if="isActiveSettingsTab(2)">
+            <h1>Filter Features & Scenarios</h1>
+            <multi-select inline-template :list="tags" v-on:change="onTagsFilterChange">
+              <div class="multi-select">
+                <input type="text" placeholder="Filter list..." v-model="search" @keyup.esc="clear">
+                <div class="multi-select-items" v-if="filteredItems.length > 0">
+                  <label class="control control-checkbox" v-for="tag in filteredItems">{{tag}}
+                    <input type="checkbox" :value="tag" v-model="selectedItems"/>
+                    <div class="control-indicator"></div>
+                  </label>
+                </div>
+                <p v-else>No tags found</p>
+                <footer>
+                  <span>Multiple</span>
+                  <button type="button" @click="select">Select</button>
+                  <button type="button" @click="unselect">Unselect</button>
+                </footer>
               </div>
-              <p v-else>No tags found</p>
-              <footer>
-                <span>Multiple</span>
-                <button type="button" @click="select">Select</button>
-                <button type="button" @click="unselect">Unselect</button>
-              </footer>
-            </div>
-          </multi-select>
+            </multi-select>
+          </div>
+          <!-- END Show Filter Settings -->
+          <!-- Show Print Settings -->
+          <div class="print" v-if="isActiveSettingsTab(3)">
+            <h1>Print Settings</h1>
+            <label for="document-title" class="settings-control">
+              Document Title <input id="document-title" type="text" v-model="documentTitle">
+            </label>
+            <label for="document-subtitle" class="settings-control">
+              Document Subtitle <input id="document-subtitle" type="text" v-model="documentSubtitle">
+            </label>
+            <label for="document-date" class="settings-control">
+              Date <input id="document-date" type="text" v-model="documentDate">
+            </label>
+            <label for="document-revision" class="settings-control">
+              Revision <input id="document-revision" type="text" v-model="documentRevision">
+            </label>
+            <label for="document-organisation" class="settings-control">
+              Organisation <input id="document-organisation" type="text" v-model="documentOrganisation">
+            </label>
+          </div>
+          <!-- END Show Print Settings -->
         </div>
-        <!-- END Show Filter Settings -->
-        <!-- Show Print Settings -->
-        <div class="options print" v-if="showPrintSettings">
-          <h1>Print Settings</h1>
-          <label for="document-title" class="settings-control">
-            Document Title <input id="document-title" type="text" v-model="documentTitle">
-          </label>
-          <label for="document-subtitle" class="settings-control">
-            Document Subtitle <input id="document-subtitle" type="text" v-model="documentSubtitle">
-          </label>
-          <label for="document-date" class="settings-control">
-            Date <input id="document-date" type="text" v-model="documentDate">
-          </label>
-          <label for="document-revision" class="settings-control">
-            Revision <input id="document-revision" type="text" v-model="documentRevision">
-          </label>
-          <label for="document-organisation" class="settings-control">
-            Organisation <input id="document-organisation" type="text" v-model="documentOrganisation">
-          </label>
-        </div>
-        <!-- END Show Print Settings -->
       </aside>
       <section id="content" class="content" v-cloak>
         <!-- Cover Page -->

@@ -57,9 +57,8 @@ new Vue({// eslint-disable-line
     search: '',
     selectedId: '',
     showMenu: true,
-    showShowHideSettings: false,
-    showFilterSettings: false,
-    showPrintSettings: false,
+    showSettings: false,
+    activeSettingsTab: 1,
     showScenarioSteps: true,
     showScenarios: true,
     showTags: true,
@@ -84,14 +83,14 @@ new Vue({// eslint-disable-line
     toggleMenu: function () {
       this.showMenu = !this.showMenu
     },
-    toggleShowHideSettings: function () {
-      this.showShowHideSettings = !this.showShowHideSettings
+    toggleSettings: function (){
+      this.showSettings = !this.showSettings
     },
-    toggleFilterSettings: function () {
-      this.showFilterSettings = !this.showFilterSettings
+    isActiveSettingsTab (tab) {
+      return this.activeSettingsTab === tab
     },
-    togglePrintSettings: function () {
-      this.showPrintSettings = !this.showPrintSettings
+    setActiveSettingsTab (tab) {
+      return this.activeSettingsTab = tab
     },
     onTagsFilterChange: function (tags) {
       this.tags = tags
