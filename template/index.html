@@ -57,19 +57,19 @@
           <div class="show-hide" v-if="isActiveSettingsTab(1)">
             <h1>Show Feature Details</h1>
             <label class="control control-checkbox">Scenario Steps
-              <input type="checkbox" v-model="showScenarioSteps"/>
+              <input type="checkbox" v-model="showHideOptions.showScenarioSteps"/>
               <div class="control-indicator"></div>
             </label>
             <label class="control control-checkbox">Tags
-              <input type="checkbox" v-model="showTags"/>
+              <input type="checkbox" v-model="showHideOptions.showTags"/>
               <div class="control-indicator"></div>
             </label>
             <label class="control control-checkbox">Descriptions
-              <input type="checkbox" v-model="showDescriptions"/>
+              <input type="checkbox" v-model="showHideOptions.showDescriptions"/>
               <div class="control-indicator"></div>
             </label>
             <label class="control control-checkbox">Scenarios
-              <input type="checkbox" v-model="showScenarios"/>
+              <input type="checkbox" v-model="showHideOptions.showScenarios"/>
               <div class="control-indicator"></div>
             </label>
           </div>
@@ -100,19 +100,19 @@
           <div class="print" v-if="isActiveSettingsTab(3)">
             <h1>Print Settings</h1>
             <label for="document-title" class="settings-control">
-              Document Title <input id="document-title" type="text" v-model="documentTitle">
+              Document Title <input id="document-title" type="text" v-model="printOptions.documentTitle">
             </label>
             <label for="document-subtitle" class="settings-control">
-              Document Subtitle <input id="document-subtitle" type="text" v-model="documentSubtitle">
+              Document Subtitle <input id="document-subtitle" type="text" v-model="printOptions.documentSubtitle">
             </label>
             <label for="document-date" class="settings-control">
-              Date <input id="document-date" type="text" v-model="documentDate">
+              Date <input id="document-date" type="text" v-model="printOptions.documentDate">
             </label>
             <label for="document-revision" class="settings-control">
-              Revision <input id="document-revision" type="text" v-model="documentRevision">
+              Revision <input id="document-revision" type="text" v-model="printOptions.documentRevision">
             </label>
             <label for="document-organisation" class="settings-control">
-              Organisation <input id="document-organisation" type="text" v-model="documentOrganisation">
+              Organisation <input id="document-organisation" type="text" v-model="printOptions.documentOrganisation">
             </label>
           </div>
           <!-- END Show Print Settings -->
@@ -121,11 +121,11 @@
       <section id="content" class="content" v-cloak>
         <!-- Cover Page -->
         <header class="cover-page">
-          <p class="organisation">{{documentOrganisation}}</p>
-          <h1 class="title">{{documentTitle}}</h1>
-          <h2 class="subtitle">{{documentSubtitle}}</h2>
-          <p class="date">{{documentDate}}</p>
-          <p class="revision">{{documentRevision}}</p>
+          <p class="organisation">{{printOptions.documentOrganisation}}</p>
+          <h1 class="title">{{printOptions.documentTitle}}</h1>
+          <h2 class="subtitle">{{printOptions.documentSubtitle}}</h2>
+          <p class="date">{{printOptions.documentDate}}</p>
+          <p class="revision">{{printOptions.documentRevision}}</p>
         </header>
         <!-- Search Results -->
         <article class="content search-result" v-if="isShowingSearchResults">
@@ -145,18 +145,18 @@
         </article>
         <article class="content feature" :id="feature.path" v-for="feature in filteredFeatures" v-else>
           <div class="feature-title">Feature</div>
-          <div class="tags" v-if="showTags">
+          <div class="tags" v-if="showHideOptions.showTags">
             <i v-for="tag in feature.tags">{{tag}} </i>
           </div>
           <h1><a class="anchor" :href="feature.path | pathify"><i class="icon-link"></i></a>{{feature.name}}</h1>
-          <p v-if="showDescriptions">{{feature.description}}</p>
-          <section v-if="showScenarios" class="scenario" v-for="scenario in feature.scenarios">
-            <div class="tags" v-if="showTags">
+          <p v-if="showHideOptions.showDescriptions">{{feature.description}}</p>
+          <section v-if="showHideOptions.showScenarios" class="scenario" v-for="scenario in feature.scenarios">
+            <div class="tags" v-if="showHideOptions.showTags">
               <i v-for="tag in scenario.tags">{{tag}}</i>
             </div>
             <h2><em>{{scenario.keyword}}: </em>{{scenario.name}}</h2>
-            <p v-if="showDescriptions">{{scenario.description}}</p>
-            <ul v-if="showScenarioSteps">
+            <p v-if="showHideOptions.showDescriptions">{{scenario.description}}</p>
+            <ul v-if="showHideOptions.showScenarioSteps">
               <li v-for="step in scenario.steps">
                 <em>{{step.keyword}}</em>{{step.text}}
                 <p v-if="step.content">{{step.content}}</p>
@@ -169,7 +169,7 @@
                 </table>
               </li>
             </ul>
-            <table v-if="showScenarioSteps" class="examples" v-if="scenario.examples" v-for="example in scenario.examples">
+            <table v-if="showHideOptions.showScenarioSteps" class="examples" v-if="scenario.examples" v-for="example in scenario.examples">
               <thead>
                 <tr>
                   <th class="table-title" :colspan="example.columns.length">

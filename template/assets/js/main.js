@@ -59,15 +59,19 @@ new Vue({// eslint-disable-line
     showMenu: true,
     showSettings: false,
     activeSettingsTab: 1,
-    showScenarioSteps: true,
-    showScenarios: true,
-    showTags: true,
-    showDescriptions: true,
-    documentTitle: 'Title',
-    documentSubtitle: 'Document Subtitle',
-    documentDate: '1 April 2018',
-    documentRevision: 'v.1',
-    documentOrganisation: 'GherkinBook'
+    showHideOptions: {
+      showScenarioSteps: true,
+      showScenarios: true,
+      showTags: true,
+      showDescriptions: true
+    },
+    printOptions: {
+      documentTitle: 'Title',
+      documentSubtitle: 'Document Subtitle',
+      documentDate: '1 April 2018',
+      documentRevision: 'v.1',
+      documentOrganisation: 'GherkinBook'
+    }
   },
   methods: {
     clear: function (event) {
