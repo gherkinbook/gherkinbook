@@ -5,6 +5,7 @@ const crypto = require('crypto')
 const Gherkin = require('gherkin')
 const configFileName = '.gherkinbook'
 const outputFileName = 'gherkinbook.min.js'
+const cucumberOutputFileName = 'gherkinbook-cucumber.min.js'
 
 if (!fs.existsSync(configFileName)) {
   console.error('GherkinBook Generator config file ' + configFileName + ' is missing.')
@@ -70,41 +71,26 @@ function findTestResult(tests, featureName, scenarioName, stepName) {
   return result
 }
 
-function merge () {
+function publish (varibleName, data, filename) {
+  if (data) {
+    var gherkinbookData = 'var ' + varibleName + ' = ' + JSON.stringify(data)
+    var gherkinbookFile = path.join(config.output, filename)
+    fs.writeFileSync(gherkinbookFile, gherkinbookData, 'utf-8')
+    console.log('GherkinBook data ('+ filename +') has been successfully generated')
+  }
+}
+
+function bundle () {
   return new Promise(function (resolve, reject) {
     Promise.all([readFeatures(), readTestResults()]).then(results => {
-      console.log('Merging Results...')
-      var features = results[0]
-      var tests = results[1]
-
-      features.forEach(feature => {
-        feature.children.forEach(child => {
-          child.steps.forEach(step => {
-            step.result = findTestResult(tests, feature.name, child.name, step.text)
-          })
-        })
-      })
-
-      console.log(JSON.stringify(features))
-      console.log('Merging Results...Done')
-      resolve({})
+      publish('gherkinbook', results[0], outputFileName)
+      publish('gherkinbooktests', results[1], cucumberOutputFileName)
     }).catch((err) => reject(err))
   })
 }
 
-function bundle () {
-  var gherkinbookData = 'var gherkinbook =' + JSON.stringify(bundle)
-  var gherkinbookFile = path.join(config.output, outputFileName)
-  fs.writeFileSync(gherkinbookFile, gherkinbookData, 'utf-8')
-  console.log('GherkinBook data has been successfully generated')
-}
-
-function publish () {
-  merge().then(result => bundle(result)).catch(err => console.error(err))
-}
-
 function main () {
-  publish()
+  bundle().catch(err => console.error(err))
 }
 
 main()

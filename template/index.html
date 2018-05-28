@@ -10,6 +10,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
   <link rel="stylesheet" href="assets/css/icons.css">
+  <link rel="stylesheet" href="assets/css/default.css">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/print.css" media="print">
   <title>GherkinBook</title>
@@ -37,13 +38,14 @@
       </ul>
     </nav>
     <header class="page-header" v-cloak>
-      <a href="index.html" class="toolbar-button logo" @click="toggleMenu">
+      <a href="index.html" class="toolbar-button logo">
         <img src="assets/images/favicon-32x32.png" alt="GherkinBook Logo">
       </a>
       <h1>{{title}}</h1>
     </header>
     <nav class="toolbar">
-      <a href="#" class="toolbar-button hide" @click="toggleSettings"><i class="icon-cogs" :class="{active: showSettings}"></i></a>
+      <a href="cucumber.html" class="toolbar-button"><i class="icon-stats-dots" :class="{active: showSettings}"></i></a>
+      <a href="#" class="toolbar-button" @click="toggleSettings"><i class="icon-cogs" :class="{active: showSettings}"></i></a>
     </nav>
     <main class="site">
       <aside class="options-container" v-cloak>
@@ -70,6 +72,10 @@
             </label>
             <label class="control control-checkbox">Scenarios
               <input type="checkbox" v-model="showHideOptions.showScenarios"/>
+              <div class="control-indicator"></div>
+            </label>
+            <label class="control control-checkbox">Test Results
+              <input type="checkbox" v-model="showHideOptions.showTestResults"/>
               <div class="control-indicator"></div>
             </label>
           </div>
@@ -158,6 +164,7 @@
             <p v-if="showHideOptions.showDescriptions">{{scenario.description}}</p>
             <ul v-if="showHideOptions.showScenarioSteps">
               <li v-for="step in scenario.steps">
+                <testResult :result="step.result"></testResult>
                 <em>{{step.keyword}}</em>{{step.text}}
                 <p v-if="step.content">{{step.content}}</p>
                 <table class="data-table" v-if="step.dataTable">

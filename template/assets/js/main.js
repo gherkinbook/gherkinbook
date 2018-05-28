@@ -47,6 +47,18 @@ Vue.component('multi-select', {
   }
 })
 
+Vue.component('test-result', {
+  props: ['result'],
+  template: '#test-result-template',
+  data() {
+    return {
+      icon: false,
+      duration: 'Check me',
+      status: 'xx'
+    }
+  }
+})
+
 new Vue({// eslint-disable-line
   el: '#app',
   data: {
@@ -56,14 +68,14 @@ new Vue({// eslint-disable-line
     tags: {items: service.getTags(), selectedItems: service.getTags()},
     search: '',
     selectedId: '',
-    showMenu: true,
     showSettings: false,
     activeSettingsTab: 1,
     showHideOptions: {
       showScenarioSteps: true,
       showScenarios: true,
       showTags: true,
-      showDescriptions: true
+      showDescriptions: true,
+      showTestResults: true
     },
     printOptions: {
       documentTitle: 'Title',
@@ -83,9 +95,6 @@ new Vue({// eslint-disable-line
     },
     isActive: function (id) {
       return this.selectedId === id
-    },
-    toggleMenu: function () {
-      this.showMenu = !this.showMenu
     },
     toggleSettings: function (){
       this.showSettings = !this.showSettings
